@@ -3,14 +3,21 @@ package com.acme.a3csci3130;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateContactAcitivity extends Activity {
 
-    private Button submitButton;
-    private EditText nameField, emailField;
+    private EditText nameField, addressField, business_numberField;
     private MyApplicationData appState;
+    private Spinner Primary_business, Province;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,21 +26,68 @@ public class CreateContactAcitivity extends Activity {
         //Get the app wide shared variables
         appState = ((MyApplicationData) getApplicationContext());
 
-        submitButton = (Button) findViewById(R.id.submitButton);
+        // Spinner element
+        Primary_business = (Spinner) findViewById(R.id.Primary_business);
+        Province = (Spinner) findViewById(R.id.Province);
+
+        // Spinner Drop down elements
+        List<String> Primary_business_types = new ArrayList<String>();
+        Primary_business_types.add("Fisher");
+        Primary_business_types.add("Distributor");
+        Primary_business_types.add("Processor");
+        Primary_business_types.add("Fish Monger");
+
+        List<String> Province_names = new ArrayList<String>();
+        Province_names.add("AB");
+        Province_names.add("BC");
+        Province_names.add("MB");
+        Province_names.add("NB");
+        Province_names.add("NL");
+        Province_names.add("NS");
+        Province_names.add("NT");
+        Province_names.add("NU");
+        Province_names.add("ON");
+        Province_names.add("PE");
+        Province_names.add("QC");
+        Province_names.add("SK");
+        Province_names.add("YT");
+        Province_names.add(" ");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> Adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Primary_business_types);
+        ArrayAdapter<String> Adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Province_names);
+
+        // Drop down layout style - list view with radio button
+        Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        Primary_business.setAdapter(Adapter1);
+        Province.setAdapter(Adapter2);
+
         nameField = (EditText) findViewById(R.id.name);
-        emailField = (EditText) findViewById(R.id.email);
+        addressField = (EditText) findViewById(R.id.Address);
+        business_numberField = (EditText) findViewById(R.id.Business_number);
     }
 
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
         String personID = appState.firebaseReference.push().getKey();
         String name = nameField.getText().toString();
-        String email = emailField.getText().toString();
-        Contact person = new Contact(personID, name, email);
+        String address = addressField.getText().toString();
+        String business_number = business_numberField.getText().toString();
+        String primary_business = Primary_business.getSelectedItem().toString();
+        String province = Province.getSelectedItem().toString();
+
+        Contact person = new Contact(personID, name, business_number, primary_business, address, province);
 
         appState.firebaseReference.child(personID).setValue(person);
 
         finish();
+
+//        String name = Province.getSelectedItem().toString();
+//        Toast.makeText(this, name,
+//                Toast.LENGTH_LONG).show();
 
     }
 }
