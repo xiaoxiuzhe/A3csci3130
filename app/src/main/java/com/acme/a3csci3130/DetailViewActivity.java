@@ -11,6 +11,13 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h1>DetailViewActivity</h1>
+ * the activity display each object and its detail
+ * <b>Note:</b> forked from prof
+ *
+ * @author  Xiuzhe Xiao
+ */
 public class DetailViewActivity extends Activity {
 
     private EditText nameField, addressField, business_numberField;
@@ -18,6 +25,11 @@ public class DetailViewActivity extends Activity {
     Contact receivedPersonInfo;
     private MyApplicationData appState;
 
+    /**
+     * this method create the activity
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +89,12 @@ public class DetailViewActivity extends Activity {
         }
     }
 
+    /**
+     * This method update the object detail
+     * to firebase
+     * @param v
+     * @return void.
+     */
     public void updateContact(View v){
         String personID = receivedPersonInfo.uid;
         String name = nameField.getText().toString();
@@ -92,6 +110,11 @@ public class DetailViewActivity extends Activity {
         finish();
     }
 
+    /**
+     * This method delete the object in firebase
+     * @param v
+     * @return void.
+     */
     public void eraseContact(View v)
     {
         String personID = receivedPersonInfo.uid;

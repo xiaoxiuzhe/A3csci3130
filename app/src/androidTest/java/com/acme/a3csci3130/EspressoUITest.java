@@ -41,6 +41,10 @@ public class EspressoUITest{
             new ActivityTestRule(MainActivity.class);
     private MainActivity mainActivity;
 
+    /**
+     * This class is to clear the database, so every
+     * testcases will start with a empty database.
+     */
     @Before
     public void setUp() throws InterruptedException {
         mainActivity = mActivityRule.getActivity();
@@ -49,6 +53,10 @@ public class EspressoUITest{
         mDatabase.removeValue();
     }
 
+    /**
+     * Start with an empty database, store an object inside.
+     * Has the size of the list increased?
+     */
     @Test
     public void store_an_object() throws InterruptedException {
         onView(withId(R.id.submitButton)).perform(click());
@@ -61,6 +69,11 @@ public class EspressoUITest{
         onData(anything()).inAdapterView(withId(R.id.listView)).atPosition(0).check(matches(isDisplayed()));
     }
 
+    /**
+     * Start with an empty database, store an object inside.
+     * Read it back from the database. Is it the object the
+     * same one as the one I stored?
+     */
     @Test
     public void match_data_is_the_same_as_I_stored() throws InterruptedException {
         onView(withId(R.id.submitButton)).perform(click());
@@ -82,6 +95,12 @@ public class EspressoUITest{
 
     }
 
+    /**
+     * Start with an empty database, store an object inside.
+     * Read it back from the database, edit it, save it back
+     * on the database, read from it. Is the object the same
+     * as the one I edited and saved?
+     */
     @Test
     public void match_data_is_the_same_as_I_edit() throws InterruptedException {
         onView(withId(R.id.submitButton)).perform(click());
@@ -112,6 +131,10 @@ public class EspressoUITest{
         onView(withId(R.id.Province)).check(matches(withSpinnerText(containsString("BC"))));
     }
 
+    /**
+     * Start with an empty database, store an object inside.
+     * Delete the object. Is the size of the list view zero?
+     */
     @Test
     public void delete_an_object() throws InterruptedException {
         onView(withId(R.id.submitButton)).perform(click());

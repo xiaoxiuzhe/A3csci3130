@@ -21,6 +21,15 @@ public class Contact implements Serializable {
         // Default constructor required for calls to DataSnapshot.getValue
     }
 
+    /**
+     * this method is a constructor for Contact object
+     * @param uid
+     * @param name
+     * @param business_number
+     * @param primary_business
+     * @param address
+     * @param province
+     */
     public Contact(String uid, String name, String business_number, String primary_business, String address, String province){
         this.uid = uid;
         this.name = name;

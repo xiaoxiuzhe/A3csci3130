@@ -13,12 +13,25 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h1>CreateContactAcitivity</h1>
+ * the activity start an object
+ * some detail is required for databse
+ * <b>Note:</b> forked from prof
+ *
+ * @author  Xiuzhe Xiao
+ */
 public class CreateContactAcitivity extends Activity {
 
     private EditText nameField, addressField, business_numberField;
     private MyApplicationData appState;
     private Spinner Primary_business, Province;
 
+    /**
+     * this method create the activity
+     * @param savedInstanceState
+     * @return void
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +83,11 @@ public class CreateContactAcitivity extends Activity {
         business_numberField = (EditText) findViewById(R.id.Business_number);
     }
 
+    /**
+     * This method submit the object to firebase
+     * @param v
+     * @return void.
+     */
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
         String personID = appState.firebaseReference.push().getKey();
